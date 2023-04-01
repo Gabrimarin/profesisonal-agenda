@@ -1,0 +1,1 @@
+type ContactType = "email" | "phone";
