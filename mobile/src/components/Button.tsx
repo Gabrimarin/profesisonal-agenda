@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   TouchableOpacityProps,
+  View,
 } from "react-native";
 import colors from "tailwindcss/colors";
 import { pallete } from "../styles/pallete";
@@ -14,6 +15,7 @@ interface ButtonProps extends TouchableOpacityProps {
   text?: string;
   loading?: boolean;
   style?: any;
+  startIcon?: React.ReactNode;
 }
 
 export function Button({
@@ -22,6 +24,7 @@ export function Button({
   color = "primary",
   text = "",
   style = {},
+  startIcon,
   ...rest
 }: ButtonProps) {
   const variants: {
@@ -34,7 +37,7 @@ export function Button({
   } = {
     contained: {
       button: {
-        className: `rounded-md p-2 w-full items-center`,
+        className: `rounded-md p-2 items-center`,
         style: {
           backgroundColor: pallete[color],
         },
@@ -46,22 +49,21 @@ export function Button({
     },
     text: {
       button: {
-        className: `rounded-md p-2 w-full items-center`,
+        className: `rounded-md p-2 items-center`,
         style: {
           backgroundColor: "transparent",
         },
       },
       text: {
-        className: ``,
+        className: `font-bold`,
         style: {},
       },
     },
     outlined: {
       button: {
-        className: `rounded-md p-2 w-full items-center`,
+        className: `rounded-md p-2 items-center border`,
         style: {
-          backgroundColor: "transparent",
-          borderWidth: 1,
+          backgroundColor: "white",
           borderColor: pallete[color],
         },
       },
@@ -78,7 +80,11 @@ export function Button({
       className={variants[variant].button.className}
       activeOpacity={0.7}
       disabled={loading}
-      style={{ ...variants[variant].button.style, ...style }}
+      style={{
+        ...variants[variant].button.style,
+        width: "100%",
+        ...style,
+      }}
       {...rest}
     >
       {loading ? (
@@ -87,18 +93,19 @@ export function Button({
           color={variant === "contained" ? colors.white : pallete[color]}
         />
       ) : (
-        <Fragment>
+        <View className="flex-row items-center justify-center">
+          {startIcon && <View className="ml-auto mr-2">{startIcon}</View>}
           {text ? (
             <Text
               className={variants[variant].text.className}
               style={variants[variant].text.style}
             >
-              {text}
+              {text.toUpperCase()}
             </Text>
           ) : (
             rest.children
           )}
-        </Fragment>
+        </View>
       )}
     </TouchableOpacity>
   );

@@ -11,7 +11,7 @@ export function ResourceWrapper({
   children: React.ReactNode;
   loading: boolean;
   error: any;
-  onRetry: () => void;
+  onRetry?: () => void;
 }) {
   if (loading) {
     return (

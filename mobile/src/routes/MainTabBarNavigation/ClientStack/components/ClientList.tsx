@@ -8,11 +8,19 @@ import {
   View,
 } from "react-native";
 import colors from "tailwindcss/colors";
-import { contactTypes } from "../../../constants/contactTypes";
-import { Client } from "../../../models/Client";
+import { contactTypes } from "../../../../constants/contactTypes";
+import { Client } from "../../../../models/Client";
 
 interface ClientListItemProps extends TouchableOpacityProps {
   client: Client;
+}
+
+function Avatar() {
+  return (
+    <View className="w-8 h-8 rounded-full bg-gray-200 flex-row justify-center items-center">
+      <Feather name="user" size={24} color="black" />
+    </View>
+  );
 }
 
 function ClientListItem({ client, ...rest }: ClientListItemProps) {
@@ -20,7 +28,6 @@ function ClientListItem({ client, ...rest }: ClientListItemProps) {
   function toggleContactsVisible() {
     setContactsVisible((prev) => !prev);
   }
-  console.log(client.id);
   const { name, contacts } = client;
   return (
     <TouchableOpacity
@@ -28,7 +35,10 @@ function ClientListItem({ client, ...rest }: ClientListItemProps) {
       {...rest}
     >
       <View className="flex-row justify-between items-center h-8">
-        <Text className="text-lg font-semibold">{name}</Text>
+        <View className="flex-row">
+          <Avatar />
+          <Text className="text-lg font-semibold ml-2">{name}</Text>
+        </View>
         <View className="flex-row items-center">
           {!contactsVisible && !!contacts?.length && (
             <View className="flex-row " key={client.id}>
@@ -63,7 +73,7 @@ function ClientListItem({ client, ...rest }: ClientListItemProps) {
       </View>
       {contactsVisible &&
         client?.contacts?.map((contact) => (
-          <View className="flex-row items-center" key={contact.id}>
+          <View className="flex-row items-center mt-2" key={contact.id}>
             <Feather
               name={
                 contactTypes[contact.type as keyof typeof contactTypes]

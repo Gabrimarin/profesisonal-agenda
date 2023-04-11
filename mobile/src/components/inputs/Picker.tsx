@@ -44,14 +44,18 @@ export function Picker({
       control={usedControl}
       render={({ field: { onChange, value } }) => (
         <TouchableOpacity onPress={toggleModal}>
-          <InputWrapper label={label}>
-            <View className="flex-row items-center justify-between">
+          <InputWrapper
+            label={label}
+            endAdornment={
+              <Feather name="chevron-down" size={20} color={colors.gray[400]} />
+            }
+          >
+            <View className="flex-row items-center">
               {value ? (
                 renderInputItem(items.find((item) => getValue(item) === value))
               ) : (
                 <Text className="text-gray-400">{placeholder}</Text>
               )}
-              <Feather name="chevron-down" size={20} color={colors.gray[400]} />
             </View>
           </InputWrapper>
           <Modal>

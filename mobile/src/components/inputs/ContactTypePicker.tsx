@@ -42,7 +42,7 @@ export function ContactTypePicker({ name }: { name: string }) {
         return (
           <View className="flex-row items-center">
             <ContactTypeIcon type={item} />
-            <Text className="ml-2 text-base">{item}</Text>
+            <Text className="ml-2 h-full text-base">{item}</Text>
           </View>
         );
       }}

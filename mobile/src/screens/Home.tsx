@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { getActivities } from "../api/activities";
 import { Button } from "../components/Button";
 import { useAppContext } from "../contexts/AppContext";
@@ -44,54 +44,32 @@ export function Home() {
   const activities = data?.data ?? [];
 
   return (
-    <View className="p-2 h-full">
-      <View className="flex-row justify-between items-center">
-        <Text className="text-primary text-4xl">{user.name}</Text>
-      </View>
+    <ScrollView>
+      <View className="p-2 h-full">
+        <View className="flex-row justify-between items-center">
+          <Text className="text-primary text-4xl">{user.name}</Text>
+        </View>
 
-      <Text className="text-xl text-primary">
-        {dayjs().format("MMMM")} progress
-      </Text>
-      <Calendar
-        activities={activities}
-        month={dayjs().month()}
-        year={dayjs().year()}
-      />
-      <View className="my-2" />
-      <Button
-        text="Calendar"
-        onPress={() => {
-          navigate("CalendarHome");
-        }}
-      />
-      <View className="mt-2 flex-wrap w-full">
-        <Row>
-          <NavButton
-            text="Clients"
-            onPress={() => navigate("ClientHome")}
-            icon="users"
-          />
-          <View className="w-2" />
-          <NavButton
-            text="Activities"
-            onPress={() => navigate("ActivityList")}
-            icon="activity"
-          />
-        </Row>
-        <Row>
-          <NavButton
-            text="Activity Types"
-            onPress={() => navigate("ActivityTypeList")}
-            icon="list"
-          />
-          <View className="w-2" />
-          <NavButton
-            text="Charts"
-            onPress={() => navigate("Charts")}
-            icon="bar-chart"
-          />
-        </Row>
+        <Text className="text-xl text-primary">
+          {dayjs().format("MMMM")} progress
+        </Text>
+        <Calendar
+          activities={activities}
+          month={dayjs().month()}
+          year={dayjs().year()}
+        />
+        <View className="my-2" />
+        <View className="mt-2 flex-wrap w-full">
+          <Row>
+            <View className="w-2" />
+            <NavButton
+              text="Charts"
+              onPress={() => navigate("Charts")}
+              icon="bar-chart"
+            />
+          </Row>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
