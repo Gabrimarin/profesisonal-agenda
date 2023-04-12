@@ -28,7 +28,7 @@ export function ClientHome() {
   const isEmpty = clientList.length === 0;
   return (
     <ResourceWrapper loading={isFetching} error={error} onRetry={refetch}>
-      <View className="p-2">
+      <View className="pb-[120px]">
         {!isEmpty && (
           <FormProvider {...formMethods}>
             <TextField

@@ -51,7 +51,7 @@ export function ActivityHome() {
   const isEmpty = activitiesList.length === 0;
   return (
     <ResourceWrapper loading={isFetching} error={error} onRetry={refetch}>
-      <View className="p-2">
+      <View className="pb-[120px]">
         {!isEmpty && (
           <FormProvider {...formMethods}>
             <TextField
@@ -71,13 +71,15 @@ export function ActivityHome() {
               <Text className="text-2xl text-primary">No activity yet</Text>
             </View>
           )}
-          <ActivityList
-            activities={filteredActivitiesList}
-            onSelectActivity={(activity) => {
-              navigate("ActivityForm", { activityId: activity.id });
-            }}
-            onToggleDone={handleToggleDone}
-          />
+          {!isEmpty && (
+            <ActivityList
+              activities={filteredActivitiesList}
+              onSelectActivity={(activity) => {
+                navigate("ActivityForm", { activityId: activity.id });
+              }}
+              onToggleDone={handleToggleDone}
+            />
+          )}
         </View>
       </View>
       <FAB

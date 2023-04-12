@@ -2,6 +2,7 @@ import { Feather } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import {
   ScrollView,
+  SectionList,
   Text,
   TouchableOpacity,
   TouchableOpacityProps,
@@ -64,33 +65,37 @@ export function ActivityList({
 }: Props) {
   const doneActivities = activities.filter((activity) => activity.done);
   const pendingActivities = activities.filter((activity) => !activity.done);
-
+  const data = [
+    {
+      title: "Pending",
+      data: pendingActivities,
+    },
+    {
+      title: "Done",
+      data: doneActivities,
+    },
+  ];
   return (
-    <ScrollView>
-      <View className="my-2 w-full flex-row items-center">
-        <Text className="text-lg font-semibold">Pending</Text>
-        <View className="w-full h-[2px] bg-black ml-2 mt-1" />
-      </View>
-      {pendingActivities?.map((activity) => (
-        <ActivityListItem
-          key={activity.id}
-          activity={activity}
-          onPress={() => onSelectActivity(activity)}
-          onToggleDone={onToggleDone}
-        />
-      ))}
-      <View className="my-2 w-full flex-row items-center">
-        <Text className="text-lg font-semibold">Done</Text>
-        <View className="w-full h-[2px] bg-black ml-2 mt-1" />
-      </View>
-      {doneActivities?.map((activity) => (
-        <ActivityListItem
-          key={activity.id}
-          activity={activity}
-          onPress={() => onSelectActivity(activity)}
-          onToggleDone={onToggleDone}
-        />
-      ))}
-    </ScrollView>
+    <View>
+      <SectionList
+        nestedScrollEnabled
+        contentContainerStyle={{ paddingBottom: 80 }}
+        sections={data}
+        keyExtractor={(item) => item.id!.toString()}
+        renderItem={({ item }) => (
+          <ActivityListItem
+            activity={item}
+            onPress={() => onSelectActivity(item)}
+            onToggleDone={onToggleDone}
+          />
+        )}
+        renderSectionHeader={({ section: { title } }) => (
+          <View className="my-2 w-full flex-row items-center">
+            <Text className="text-lg font-semibold">{title}</Text>
+            <View className="w-full h-[2px] bg-black ml-2 mt-1" />
+          </View>
+        )}
+      />
+    </View>
   );
 }

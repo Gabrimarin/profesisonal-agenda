@@ -19,6 +19,7 @@ model User {
   clients       Client[]
   activityTypes ActivityType[]
   activities    Activity[]
+  image_url     String?
 }
 
 model Client {

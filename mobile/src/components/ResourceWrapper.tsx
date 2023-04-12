@@ -1,7 +1,6 @@
 import { ActivityIndicator, Text, View } from "react-native";
 import { pallete } from "../styles/pallete";
 import { Button } from "./Button";
-
 export function ResourceWrapper({
   children,
   loading,
@@ -29,5 +28,5 @@ export function ResourceWrapper({
       </View>
     );
   }
-  return <View className="h-full">{children}</View>;
+  return <View className="p-2 h-full">{children}</View>;
 }

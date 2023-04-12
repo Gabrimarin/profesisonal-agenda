@@ -68,11 +68,9 @@ export function Register() {
         secureTextEntry
         control={control}
         name="password"
-        style={{
-          marginBottom: 20,
-        }}
       />
       <Button
+        style={{ marginTop: 20 }}
         loading={isLoading}
         text="Register"
         onPress={handleSubmit(onSubmit)}

@@ -49,4 +49,24 @@ export async function userRoutes(app: FastifyInstance) {
     });
     reply.send(users);
   });
+
+  app.put(
+    "/profile_picture",
+    {
+      preValidation: [app.authenticate],
+    },
+    async (request, reply) => {
+      const body = z.object({
+        url: z.string().optional(),
+      });
+      const { url } = body.parse(request.body);
+      const user = await prisma.user.update({
+        where: { id: request.user.id },
+        data: {
+          image_url: url || null,
+        },
+      });
+      reply.send(user);
+    }
+  );
 }

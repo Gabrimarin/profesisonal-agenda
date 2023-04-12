@@ -1,10 +1,11 @@
 import { Feather } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Text } from "react-native";
+import { Image, Text } from "react-native";
 import { ClientHome } from "./ClientStack/ClientHome";
 import { ActivityHome } from "./ActivityStack/ActivityHome";
 import Charts from "../../screens/Charts";
 import { ProfileStack } from "./ProfileStack";
+import { useAppContext } from "../../contexts/AppContext";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,17 +23,14 @@ function tabBarOptions({ label, icon }: { label: string; icon: any }) {
 }
 
 export function MainTabBarNavigation() {
+  const { user } = useAppContext();
+  const userImageUrl = user?.image_url;
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
       }}
     >
-      {/* <Tab.Screen
-        name="Home"
-        component={HomeNavigation}
-        options={tabBarOptions({ label: "Home", icon: "home" })}
-      /> */}
       <Tab.Screen
         name="Clients"
         component={ClientHome}
@@ -51,7 +49,27 @@ export function MainTabBarNavigation() {
       <Tab.Screen
         name="Profile"
         component={ProfileStack}
-        options={tabBarOptions({ label: "Profile", icon: "smile" })}
+        options={{
+          ...tabBarOptions({ label: "Profile", icon: "smile" }),
+          ...(userImageUrl
+            ? {
+                tabBarIcon: ({ focused }: any) => {
+                  return (
+                    <Image
+                      source={{ uri: userImageUrl }}
+                      style={{
+                        width: 24,
+                        height: 24,
+                        borderRadius: 12,
+                        borderWidth: 1,
+                        borderColor: focused ? "black" : "gray",
+                      }}
+                    />
+                  );
+                },
+              }
+            : {}),
+        }}
       />
     </Tab.Navigator>
   );

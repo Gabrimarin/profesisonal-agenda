@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import colors from "tailwindcss/colors";
 import { Button } from "../../../components/Button";
 import { TextField } from "../../../components/inputs/TextField";
@@ -82,6 +82,7 @@ export function ActivityForm() {
   }
 
   async function onUpdate(data: Activity) {
+    console.log(data);
     updateActivity(activityId!, {
       ...data,
       price: data.price ? Number(data.price) : 0,
@@ -125,7 +126,7 @@ export function ActivityForm() {
   }, [navigation]);
 
   return (
-    <View className="p-2 h-full">
+    <ScrollView>
       <ResourceWrapper loading={isFetching} error={null}>
         <FormProvider {...formMethods}>
           <TextField name="name" label="Name" placeholder="Name" />
@@ -154,6 +155,6 @@ export function ActivityForm() {
           )}
         </View>
       </ResourceWrapper>
-    </View>
+    </ScrollView>
   );
 }

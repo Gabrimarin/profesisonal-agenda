@@ -4,8 +4,8 @@ import { prisma } from "../lib/prisma";
 
 const activityBody = z.object({
   name: z.string().optional(),
-  clientId: z.number().optional(),
-  activityTypeId: z.number().optional(),
+  clientId: z.number().optional().nullable(),
+  activityTypeId: z.number().optional().nullable(),
   dateStart: z.string(),
   dateEnd: z.string().optional().nullable(),
   done: z.boolean().optional(),
@@ -92,6 +92,46 @@ export async function activityRoutes(app: FastifyInstance) {
         },
       });
       reply.send(activities);
+    }
+  );
+
+  app.get(
+    "/daily_stats",
+    {
+      preValidation: [app.authenticate],
+    },
+    async (request, reply) => {
+      const activities = await prisma.activity.findMany({
+        where: {
+          userId: request.user.id,
+        },
+        orderBy: {
+          dateStart: "asc",
+        },
+        include: {
+          client: false,
+          activityType: false,
+        },
+      });
+
+      const dailyStats = activities.reduce((acc, activity) => {
+        const date = new Date(activity.dateStart);
+        const day = date.getDate();
+        const month = date.getMonth();
+        const year = date.getFullYear();
+        const key = `${day}-${month}-${year}`;
+        if (!acc[key]) {
+          acc[key] = {
+            date: new Date(year, month, day),
+            activities: 0,
+            total_value: 0,
+          };
+        }
+        acc[key].activities += 1;
+        acc[key].total_value += activity.price ?? 0;
+        return acc;
+      }, {} as Record<string, { date: Date; activities: number; total_value: number }>);
+      reply.send(Object.values(dailyStats ?? {}));
     }
   );
 

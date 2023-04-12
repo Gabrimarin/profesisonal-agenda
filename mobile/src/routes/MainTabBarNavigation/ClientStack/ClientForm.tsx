@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, ScrollView, Text, View } from "react-native";
 import colors from "tailwindcss/colors";
 import {
   createClient,
@@ -137,7 +137,7 @@ export function ClientForm() {
   }, [navigation]);
 
   return (
-    <View className="p-2 h-full">
+    <ScrollView nestedScrollEnabled>
       <ResourceWrapper loading={isFetching} error={null}>
         <FormProvider {...formMethods}>
           <TextField
@@ -152,6 +152,7 @@ export function ClientForm() {
           {!!contacts.length && (
             <View className="max-h-72">
               <FlatList
+                nestedScrollEnabled
                 data={contacts}
                 renderItem={({ item, index }) => {
                   return (
@@ -219,6 +220,6 @@ export function ClientForm() {
           )}
         </View>
       </ResourceWrapper>
-    </View>
+    </ScrollView>
   );
 }

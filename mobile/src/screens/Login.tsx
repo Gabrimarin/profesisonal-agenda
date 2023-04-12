@@ -71,9 +71,9 @@ export function Login() {
         placeholder="Password"
         secureTextEntry
         control={control}
-        className="mb-4"
       />
       <Button
+        style={{ marginTop: 20 }}
         text="Login"
         onPress={handleSubmit(onSubmit)}
         loading={isLoading}
