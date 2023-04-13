@@ -6,7 +6,7 @@ import jwt from "./plugins/jwt";
 import cors from "@fastify/cors";
 import { authRoutes } from "./routes/auth";
 import { activityRoutes } from "./routes/activities";
-
+const PORT = process.env.PORT || 3030;
 const app = Fastify();
 
 app.register(jwt);
@@ -41,7 +41,7 @@ app.setErrorHandler((error, _, reply) => {
 
 app
   .listen({
-    port: 3333,
+    port: Number(PORT),
     host: "0.0.0.0",
   })
   .then(() => {
