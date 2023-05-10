@@ -1,14 +1,22 @@
 import axios from "axios";
 import { getValueFor } from "./storage";
-
+import { BASE_URL_DEV, BASE_URL_PROD } from "@env";
+const isDev = false;
+const baseURL = isDev ? BASE_URL_DEV : BASE_URL_PROD;
 export const api = axios.create({
-  baseURL: "http://192.168.1.7:3333",
+  baseURL,
 });
 
-api.interceptors.request.use(async (config) => {
-  const token = await getValueFor("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+api.interceptors.request.use(
+  async (config) => {
+    console.log(config);
+    const token = await getValueFor("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-  return config;
-});
+);

@@ -36,7 +36,9 @@ export default function RootRoute() {
       const response = await mutateAsync();
       const user = response.data;
       setUser(user);
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   useEffect(() => {

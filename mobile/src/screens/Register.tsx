@@ -28,6 +28,8 @@ export function Register() {
       toast("User created successfully", "success");
       navigate("Login", { email: data.email });
     } catch (error: any) {
+      console.log(error);
+      console.log(JSON.stringify(error));
       const { data } = error.response;
       const fieldErrors = data.fieldErrors;
       const message = data.message;

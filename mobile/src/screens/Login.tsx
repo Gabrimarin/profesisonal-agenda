@@ -38,6 +38,7 @@ export function Login() {
       save("token", token);
       setUser(response.data.user);
     } catch (error: any) {
+      console.log(JSON.stringify(error));
       const { data } = error.response;
       const fieldErrors = data.fieldErrors;
       const message = data.message;

@@ -5,9 +5,6 @@ module.exports = {
   orientation: "portrait",
   icon: "./assets/icon.png",
   userInterfaceStyle: "light",
-  extra: {
-    firebase_key: process.env.FIREBASE_KEY,
-  },
   splash: {
     image: "./assets/splash.png",
     resizeMode: "contain",

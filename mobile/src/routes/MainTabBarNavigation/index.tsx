@@ -1,11 +1,11 @@
 import { Feather } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Image, Text } from "react-native";
-import { ClientHome } from "./ClientStack/ClientHome";
-import { ActivityHome } from "./ActivityStack/ActivityHome";
 import Charts from "../../screens/Charts";
 import { ProfileStack } from "./ProfileStack";
 import { useAppContext } from "../../contexts/AppContext";
+import { ClientStack } from "./ClientStack";
+import { ActivityStack } from "./ActivityStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,12 +33,12 @@ export function MainTabBarNavigation() {
     >
       <Tab.Screen
         name="Clients"
-        component={ClientHome}
+        component={ClientStack}
         options={tabBarOptions({ label: "Clients", icon: "users" })}
       />
       <Tab.Screen
         name="Activities"
-        component={ActivityHome}
+        component={ActivityStack}
         options={tabBarOptions({ label: "Activities", icon: "calendar" })}
       />
       <Tab.Screen

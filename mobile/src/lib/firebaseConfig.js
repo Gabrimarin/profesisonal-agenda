@@ -1,9 +1,9 @@
 import { initializeApp } from "firebase/app";
 
 import { getStorage } from "firebase/storage";
-import Constants from "expo-constants";
+import { FIREBASE_KEY } from "@env";
 const firebaseConfig = {
-  apiKey: Constants.expoConfig.extra.firebase_key,
+  apiKey: FIREBASE_KEY,
   authDomain: "professional-agenda-a6aa5.firebaseapp.com",
   projectId: "professional-agenda-a6aa5",
   storageBucket: "professional-agenda-a6aa5.appspot.com",
